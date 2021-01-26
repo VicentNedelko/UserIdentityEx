@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Registration";
+}
+
+@model UserIdentityEx.ViewModels.UserViewModel
+
+<h3>New User Registration</h3>
+<form method="post" asp-controller="Account" asp-action="Register">
+        <div asp-validation-summary="ModelOnly"    ></div>
+        <div>
+            <label asp-for="Email"></label><br />
+            <input type="text" asp-for="Email" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div>
+            <label asp-for="Name"></label>
+            <br />
+            <input type="text" asp-for="Name" />
+            <br />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div>
+            <label asp-for="Age"></label>
+            <br />
+            <input asp-for="Age" />
+            <br />
+            <span asp-validation-for="Age"></span>
+        </div>
+        <div>
+            <label asp-for="Code"></label><br />
+            <select asp-for="Code" id="RoleSelector">
+                <option value="Doctor" selected="selected">Doctor</option>
+                <option value="Administrative">Administrative</option>
+                <option value="Assistent">Assistent</option>
+                <option value="Common">Common</option>
+            </select>
+            <br />
+            <span asp-validation-for="Code"></span>
+        </div>
+        <div>
+            <label asp-for="Password"></label>
+            <br />
+            <input asp-for="Password" />
+            <br />
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div>
+            <label asp-for="PasswordConfirm"></label>
+            <br />
+            <input asp-for="PasswordConfirm" />
+            <br />
+            <span asp-validation-for="PasswordConfirm"></span>
+        </div>
+        <div>
+            <input type="submit" value="Registration" />
+        </div>
+</form>

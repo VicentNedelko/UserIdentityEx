@@ -1,0 +1,26 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<User>
+
+    <form method="get" asp-controller="Account" asp-action="ShowList">
+        <h3>All Users list : </h3>
+        @{ if (Model.Count() == 0)
+            {
+                <p>List is empty. Please, <a asp-controller="Account" asp-action="Register">Register</a> user first.</p>
+            }
+            else
+            {
+                @foreach (var user in Model)
+                {
+                    <p> @user.UserName -- @user.Code -- @user.Email
+                    <a asp-controller="Account" asp-action="Edit">Edit </a><a asp-controller="Account" asp-action="Delete"> Delete</a>
+                    </p>
+                }
+            }
+            <p>Total : @Model.Count()</p>
+        }
+    </form>
