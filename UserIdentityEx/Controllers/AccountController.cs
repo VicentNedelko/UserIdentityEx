@@ -17,9 +17,9 @@ namespace UserIdentityEx.Controllers
             _signInManager = signInManager;
         }
         [HttpGet]
-        public async void Edit(User user)
+        public IActionResult Edit(User user)
         {
-            await _usermanager.DeleteAsync(user);
+            return View(user.Id);
         }
         [HttpGet]
         public async Task<IActionResult> ShowList()

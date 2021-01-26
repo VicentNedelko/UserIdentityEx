@@ -16,8 +16,8 @@
             {
                 @foreach (var user in Model)
                 {
-                    <p> @user.UserName -- @user.Code -- @user.Email
-                    <a asp-controller="Account" asp-action="Edit">Edit </a><a asp-controller="Account" asp-action="Delete"> Delete</a>
+                    <p> @user.UserName -- @user.Code -- @user.Email -- @user.Id
+                    <a asp-controller="Account" asp-action="Edit" asp-route-Id="@user">Edit </a><a asp-controller="Account" asp-action="Delete"> Delete</a>
                     </p>
                 }
             }
