@@ -19,8 +19,18 @@ namespace UserIdentityEx.Controllers
         [HttpGet]
         public IActionResult Edit(User user)
         {
-            return View(user.Id);
+            var viewUser = new UserViewModel
+            {
+                Email = user.Email,
+                Name = user.UserName,
+                Age = user.Age,
+                Code = user.Code,
+                Password = "",
+                PasswordConfirm = "",
+            };
+            return View("Edit", viewUser);
         }
+
         [HttpGet]
         public async Task<IActionResult> ShowList()
         {

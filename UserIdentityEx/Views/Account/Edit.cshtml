@@ -3,8 +3,50 @@
 *@
 @{
 }
+@model UserIdentityEx.ViewModels.UserViewModel
+
+<form asp-controller="Account" asp-action="Edit" method="post">
+    <div>
+        <label asp-for="Email"></label><br />
+        <input asp-for="Email" placeholder="@Model.Email"/><br />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div>
+        <label asp-for="Name"></label><br />
+        <input asp-for="Name" value="@Model.Name"/><br />
+        <span asp-validation-for="Name"></span><br />
+    </div>
+    <div>
+        <label asp-for="Age"></label><br />
+        <input asp-for="Age" value="@Model.Age"/><br />
+        <span asp-validation-for="Age"></span><br />
+    </div>
+    <div>
+        <label asp-for="Code"></label><br />
+        <select asp-for="Code">
+            <option value="Doctor" selected="selected">Doctor</option>
+            <option value="Administrative">Administrative</option>
+            <option value="Assistent">Assistent</option>
+            <option value="Common">Common</option>
+        </select>
+        <span asp-validation-for="Code"></span><br />
+    </div>
+    <div>
+        <label asp-for="Password"></label><br />
+        <input asp-for="Password" /><br />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div>
+        <label asp-for="PasswordConfirm"></label><br />
+        <input asp-for="PasswordConfirm" /><br />
+        <span asp-validation-for="PasswordConfirm"></span>
+    </div>
+    <div>
+        <input type="submit" value="Confirm" />
+    </div>
+
+</form>
 
 
-<p>
-    
-</p>
+
+
