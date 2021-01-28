@@ -16,6 +16,15 @@ namespace UserIdentityEx.Controllers
             _usermanager = userManager;
             _signInManager = signInManager;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string userId)
+        {
+            var user = await _usermanager.FindByIdAsync(userId);
+            return View("Delete", user.Id);
+        }
+
+
         [HttpGet]
         public IActionResult Edit(User user)
         {
