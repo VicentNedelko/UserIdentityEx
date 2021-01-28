@@ -26,10 +26,12 @@ namespace UserIdentityEx.Controllers
 
 
         [HttpGet]
-        public IActionResult Edit(User user)
+        public async Task<IActionResult> Edit(string id)
         {
+            var user = await _usermanager.FindByIdAsync(id);
             var viewUser = new UserViewModel
             {
+                userId = user.Id,
                 Email = user.Email,
                 Name = user.UserName,
                 Age = user.Age,
@@ -38,6 +40,18 @@ namespace UserIdentityEx.Controllers
                 PasswordConfirm = "",
             };
             return View("Edit", viewUser);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(UserViewModel userView)
+        {
+            var userDB = await _usermanager.FindByIdAsync(userView.userId);
+            userDB.Email = userView.Email;
+            userDB.Age = userView.Age;
+            userDB.Code = userView.Code;
+            await _usermanager.UpdateAsync(userDB);
+            //userDB.PasswordHash = userView.Password;
+            return RedirectToAction("/Account/ShowList");
+
         }
 
         [HttpGet]

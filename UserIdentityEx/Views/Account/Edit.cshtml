@@ -5,20 +5,22 @@
 }
 @model UserIdentityEx.ViewModels.UserViewModel
 
-<form asp-controller="Account" asp-action="Edit" method="post">
+<form asp-controller="Account" asp-action="Edit" asp-route-id="@Model.userId">
     <div>
+        <label asp-for="userId">ID = @Model.userId</label><br /><br />
+        <label>NAME = @Model.Name</label><br /><br />
         <label asp-for="Email"></label><br />
-        <input asp-for="Email" placeholder="@Model.Email"/><br />
+        <input asp-for="Email" placeholder="@Model.Email" /><br />
         <span asp-validation-for="Email"></span>
     </div>
     <div>
         <label asp-for="Name"></label><br />
-        <input asp-for="Name" value="@Model.Name"/><br />
+        <input asp-for="Name" placeholder="@Model.Name" /><br />
         <span asp-validation-for="Name"></span><br />
     </div>
     <div>
         <label asp-for="Age"></label><br />
-        <input asp-for="Age" value="@Model.Age"/><br />
+        <input asp-for="Age" placeholder="@Model.Age" /><br />
         <span asp-validation-for="Age"></span><br />
     </div>
     <div>
@@ -38,7 +40,7 @@
     </div>
     <div>
         <label asp-for="PasswordConfirm"></label><br />
-        <input asp-for="PasswordConfirm" /><br />
+        <input asp-for="PasswordConfirm" /><br /><br />
         <span asp-validation-for="PasswordConfirm"></span>
     </div>
     <div>

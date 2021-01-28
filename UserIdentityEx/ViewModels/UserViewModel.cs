@@ -9,6 +9,8 @@ namespace UserIdentityEx.ViewModels
 {
     public class UserViewModel
     {
+        public string userId { get; set; }
+
         [Required(ErrorMessage = "Email required.")]
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
