@@ -3,11 +3,27 @@
 *@
 @{
 }
-@model string
-<form asp-controller="Account" asp-action="Delete" method="get">
+@model UserIdentityEx.ViewModels.UserViewModel
+<form asp-controller="Account" asp-action="Delete" asp-route-id="@Model.userId">
+    <div>
+        <label name="Confirm">Are you sure you want to Delete this User : </label>
+    </div>
+    <br />
+    <div>
+        <label asp-for="Name"></label>@Model.Name<br />
+        <label asp-for="Age"></label>@Model.Age<br />
+        <label asp-for="Email"></label>@Model.Email<br />
+        <label asp-for="Code"></label>@Model.Code<br />
+    </div>
     <div>
         <label>
-            ID = @Model
-        </label>
+            <input type="radio" name="Confirm" value="Yes"/>
+            Yes
+        </label><br />
+        <label>
+            <input type="radio" name="Confirm" value="No" />
+            No
+        </label><br />
+        <input type="submit" value="Confirm" />
     </div>
 </form>

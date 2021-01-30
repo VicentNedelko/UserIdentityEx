@@ -18,6 +18,7 @@
                 {
                     <p> @user.UserName -- @user.Code -- @user.Email -- @user.Id
                     <a asp-controller="Account" asp-action="Edit" asp-route-id="@user.Id">Edit </a><a asp-controller="Account" asp-action="Delete" asp-route-userId="@user.Id"> Delete</a>
+                    <a asp-controller="Account" asp-action="ChangePass" asp-route-userId="@user.Id">Change Pass</a>
                     </p>
                 }
             }
