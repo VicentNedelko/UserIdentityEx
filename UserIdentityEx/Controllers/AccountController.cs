@@ -39,7 +39,18 @@ namespace UserIdentityEx.Controllers
             if(Confirm == "Yes")
             {
                 var user = await _usermanager.FindByIdAsync(id);
-                await _usermanager.DeleteAsync(user);
+                if(user != null)
+                {
+                    IdentityResult result = await _usermanager.DeleteAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ShowList");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "User not found.");
+                }
             }
             return RedirectToAction("ShowList");
         }
