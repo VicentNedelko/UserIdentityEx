@@ -8,6 +8,9 @@ namespace UserIdentityEx.BLL
 {
     public class UserBLL
     {
+        public void PrintUserProp(UserViewModel user)
+        {
 
+        }
     }
 }

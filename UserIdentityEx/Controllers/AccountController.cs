@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using UserIdentityEx.BLL;
 using UserIdentityEx.Models;
 using UserIdentityEx.ViewModels;
 
@@ -87,6 +88,10 @@ namespace UserIdentityEx.Controllers
         public async Task<IActionResult> Edit(string id, UserViewModel userView)
         {
             userView.userId = id;
+
+            //UserBLL userBLL = new UserBLL();
+            //userBLL.PrintUserProp(userView);
+
             var userDB = await _usermanager.FindByIdAsync(userView.userId);
             userDB.UserName = userView.Name;
             userDB.Email = userView.Email;
@@ -119,6 +124,12 @@ namespace UserIdentityEx.Controllers
                     PasswordHash = model.Password,
                     Code = model.Code,
                 };
+
+                if(await _usermanager.FindByEmailAsync(model.Email) != null)
+                {
+                    return View("Error", "Error! Email is also registered.");
+                }
+
                 var result = await _usermanager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
