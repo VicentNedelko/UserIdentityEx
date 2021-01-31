@@ -8,12 +8,12 @@
 <form asp-controller="Account" asp-action="ChangePass" asp-route-userId="@Model.userId">
     <div>
         <label asp-for="Password">Old Password</label>
-        <input name="OldPass" /><br />
+        <input name="OldPass" type="password"/><br />
         <span asp-validation-for="Password"></span>
     </div>
     <div>
         <label asp-for="Password">New Password</label>
-        <input name="NewPass" /><br />
+        <input name="NewPass" type="password"/><br />
         <span asp-validation-for="Password"></span>
     </div>
     <div>

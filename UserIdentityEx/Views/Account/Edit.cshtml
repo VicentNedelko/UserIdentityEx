@@ -7,8 +7,8 @@
 
 <form asp-controller="Account" asp-action="Edit" asp-route-id="@Model.userId">
     <div>
-        <label asp-for="userId">ID = @Model.userId</label><br /><br />
-        <label>NAME = @Model.Name</label><br /><br />
+        <label asp-for="userId">ID = @Model.userId</label><br />
+        <label>NAME = @Model.Name</label><br />
         <label asp-for="Email"></label><br />
         <input asp-for="Email" placeholder="@Model.Email" /><br />
         <span asp-validation-for="Email"></span>

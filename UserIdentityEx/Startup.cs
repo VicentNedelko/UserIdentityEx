@@ -53,8 +53,6 @@ namespace UserIdentityEx
             app.UseAuthorization();
             app.UseAuthentication();
 
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
