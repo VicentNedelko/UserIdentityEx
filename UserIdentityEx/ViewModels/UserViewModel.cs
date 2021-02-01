@@ -14,6 +14,7 @@ namespace UserIdentityEx.ViewModels
         [Required(ErrorMessage = "Email required.")]
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
+        [UIHint("email")]
         public string Email { get; set; }
 
         [Required]
@@ -32,12 +33,14 @@ namespace UserIdentityEx.ViewModels
         [Required]
         [Display(Name = "Pass")]
         [DataType(DataType.Password)]
+        [UIHint("password")]
         public string Password { get; set; }
 
         [Required]
         [Display(Name = "Pass Confirm")]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Passes are not equal.")]
+        [UIHint("password")]
         public string PasswordConfirm { get; set; }
     }
 }

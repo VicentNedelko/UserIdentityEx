@@ -12,10 +12,13 @@ namespace UserIdentityEx.Controllers
     {
         private readonly UserManager<User> _usermanager;
         private readonly SignInManager<User> _signInManager;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly RoleManager<User> _roleManager;
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager,
+            RoleManager<User> roleManager)
         {
             _usermanager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         [HttpGet]
