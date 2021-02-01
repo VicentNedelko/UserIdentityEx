@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -12,9 +13,9 @@ namespace UserIdentityEx.Controllers
     {
         private readonly UserManager<User> _usermanager;
         private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<User> _roleManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager,
-            RoleManager<User> roleManager)
+            RoleManager<IdentityRole> roleManager)
         {
             _usermanager = userManager;
             _signInManager = signInManager;
@@ -126,39 +127,47 @@ namespace UserIdentityEx.Controllers
             return View();
         }
         [HttpPost]
+        //[Authorize]
         public async Task<IActionResult> Register(UserViewModel model)
         {
-            if (ModelState.IsValid)
+            if (User.Identity.IsAuthenticated)
             {
-                User user = new User
+                if (ModelState.IsValid)
                 {
-                    Age = model.Age,
-                    Email = model.Email,
-                    UserName = model.Name,
-                    PasswordHash = model.Password,
-                    Code = model.Code,
-                };
-
-                if(await _usermanager.FindByEmailAsync(model.Email) != null)
-                {
-                    return View("Error", "Error! Email is also registered.");
-                }
-
-                var result = await _usermanager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
+                    User user = new User
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        Age = model.Age,
+                        Email = model.Email,
+                        UserName = model.Name,
+                        PasswordHash = model.Password,
+                        Code = model.Code,
+                    };
+
+                    if (await _usermanager.FindByEmailAsync(model.Email) != null)
+                    {
+                        return View("Error", "Error! Email is also registered.");
+                    }
+
+                    var result = await _usermanager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, false);
+                        return RedirectToAction("ShowList", "Account");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
                     }
                 }
+                return View(model);
             }
-            return View(model);
+            else
+            {
+                return Content("User doesn't Authentificated. Login first.");
+            }
         }
     }
 }

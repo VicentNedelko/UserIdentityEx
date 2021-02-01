@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +31,11 @@ namespace UserIdentityEx
             options.UseSqlServer(Configuration.GetConnectionString("UserDb_Connection")));
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<UserDbContext>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
             services.AddControllersWithViews();
         }
 
