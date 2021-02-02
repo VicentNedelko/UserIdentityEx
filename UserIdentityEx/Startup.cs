@@ -36,6 +36,7 @@ namespace UserIdentityEx
                 {
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
                 });
+            services.AddMemoryCache();
             services.AddControllersWithViews();
         }
 

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using System;
 using System.Threading.Tasks;
 using UserIdentityEx.BLL;
 using UserIdentityEx.Models;
@@ -14,12 +16,14 @@ namespace UserIdentityEx.Controllers
         private readonly UserManager<User> _usermanager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IMemoryCache _memoryCache;
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager, IMemoryCache memoryCache)
         {
             _usermanager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _memoryCache = memoryCache;
         }
 
         [HttpGet]
@@ -108,12 +112,18 @@ namespace UserIdentityEx.Controllers
             //userBLL.PrintUserProp(userView);
 
             var userDB = await _usermanager.FindByIdAsync(userView.userId);
-            userDB.UserName = userView.Name;
-            userDB.Email = userView.Email;
-            userDB.Age = userView.Age;
-            userDB.Code = userView.Code;
-            await _usermanager.UpdateAsync(userDB);
-            return RedirectToAction("ShowList");
+            if (userDB != null)
+            {
+                userDB.UserName = userView.Name;
+                userDB.Email = userView.Email;
+                userDB.Age = userView.Age;
+                userDB.Code = userView.Code;
+                await _usermanager.UpdateAsync(userDB);
+                _memoryCache.Set(userDB.Id, userDB, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(5)));
+                return RedirectToAction("ShowList");
+            }
+            return View("Error", "Error! User NOT Found.");
+            
         }
 
         [HttpGet]
@@ -130,8 +140,8 @@ namespace UserIdentityEx.Controllers
         //[Authorize]
         public async Task<IActionResult> Register(UserViewModel model)
         {
-            if (User.Identity.IsAuthenticated)
-            {
+            //if (User.Identity.IsAuthenticated)
+            //{
                 if (ModelState.IsValid)
                 {
                     User user = new User
@@ -149,6 +159,7 @@ namespace UserIdentityEx.Controllers
                     }
 
                     var result = await _usermanager.CreateAsync(user, model.Password);
+                    _memoryCache.Set(user.Id, user, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(5)));
                     if (result.Succeeded)
                     {
                         await _signInManager.SignInAsync(user, false);
@@ -163,11 +174,11 @@ namespace UserIdentityEx.Controllers
                     }
                 }
                 return View(model);
-            }
-            else
-            {
-                return Content("User doesn't Authentificated. Login first.");
-            }
+            //}
+            //else
+            //{
+                //return Content("User doesn't Authentificated. Login first.");
+            //}
         }
     }
 }
