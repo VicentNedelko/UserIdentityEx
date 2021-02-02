@@ -127,6 +127,7 @@ namespace UserIdentityEx.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Location =ResponseCacheLocation.Any, Duration =300)]
         public async Task<IActionResult> ShowList()
         {
             return View(await _usermanager.Users.ToListAsync());
