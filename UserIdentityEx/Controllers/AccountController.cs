@@ -123,7 +123,6 @@ namespace UserIdentityEx.Controllers
                 return RedirectToAction("ShowList");
             }
             return View("Error", "Error! User NOT Found.");
-            
         }
 
         [HttpGet]
