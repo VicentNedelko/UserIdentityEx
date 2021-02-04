@@ -59,7 +59,8 @@ namespace UserIdentityEx
             app.UseRouting();
             app.UseAuthorization();
             app.UseAuthentication();
-
+            app.UseCookiePolicy();
+            app.UseResponseCaching();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
